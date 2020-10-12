@@ -24,3 +24,5 @@ Server code for consentful messaging.
 8) Install the required python packages. `pip install -r requirements.txt`
 
 9) `python manage.py runserver`
+
+You should see "welcome to consentful messaging!" when you go to localhost:8000 (for now). 
