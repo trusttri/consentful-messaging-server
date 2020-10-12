@@ -13,7 +13,7 @@ Server code for consentful messaging.
 
 4) `cd consentful-messaging-server`
 
-5) Create a virtual environment (inside the directory of consentful-messaging-server/). I called it consent-message-env
+5) Create a virtual environment (inside the directory of consentful-messaging-server/). I called it consent-message-env.
 `virtualenv consent-message-env -p python3`
 
 6) Activate the environment. 
