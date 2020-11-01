@@ -6,3 +6,7 @@ def index(request):
 	template = loader.get_template('website/index.html')
 	context = {}
 	return HttpResponse(template.render(context, request))
+
+def author_network_rules(user, sender):
+	return False
+	
