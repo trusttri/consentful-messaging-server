@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from website.views import index
+from website.views import index, author_network_rules
 
 urlpatterns = [
 	path('admin/', admin.site.urls),
-    url(r'^$', index),
+	url(r'^$', index),
+	url(r'^author_network_rules', author_network_rules)
 ]
