@@ -7,6 +7,6 @@ def index(request):
 	context = {}
 	return HttpResponse(template.render(context, request))
 
-def author_network_rules(user, sender):
+def author_network_rules(request):
 	return False
 	
