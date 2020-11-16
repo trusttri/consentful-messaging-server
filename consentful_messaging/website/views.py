@@ -8,5 +8,7 @@ def index(request):
 	return HttpResponse(template.render(context, request))
 
 def author_network_rules(request):
-	return False
+    user = request.GET.get('user')
+    sender = request.GET.get('sender')
+    return HttpResponse("false")
 	
