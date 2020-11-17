@@ -13,10 +13,12 @@ def author_network_rules(request):
     sender = request.GET.get('sender')
     return HttpResponse("false")
     
-def twitter_auth(consumerkey, consumersecret, token, tokensecret):
+def key_auth_helper(consumerkey, consumersecret, token, tokensecret):
     auth = tweepy.OAuthHandler(consumerkey, consumersecret)
     auth.set_access_token(token, tokensecret)
     return auth
     
+def key_auth(
     
+
 	
