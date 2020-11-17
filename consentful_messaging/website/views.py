@@ -14,8 +14,8 @@ def author_network_rules(request):
     return HttpResponse("false")
     
 def twitter_auth(consumerkey, consumersecret, token, tokensecret):
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_key, access_secret)
+    auth = tweepy.OAuthHandler(consumerkey, consumersecret)
+    auth.set_access_token(token, tokensecret)
     return auth
     
     
