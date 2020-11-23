@@ -15,13 +15,14 @@ def author_network_rules(request):
     return HttpResponse("false")
     
 # helper function for authenticating API keys
-def key_auth_helper(consumer_key, consumer_secret, acc_key, acc_secret):
+def twitter_api_auth(consumer_key, consumer_secret, acc_key, acc_secret):
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(acc_key, acc_secret)
-    return auth
-
+    api = tweepy.API(auth, wait_on_rate_limit=True)
+    return api
+    
 # API key authentication
-def key_auth
+def twitter_api_auth_using_csv():
    with open('twitter-creds.csv') as csv_file
       reader = csv.reader(csv_file, delimiter=',')
       for row in reader:
@@ -29,9 +30,10 @@ def key_auth
          consumer_secret = row['consumer_secret']
          acc_key = row['access_key']
          acc_secret = row['access_secret']
-         key_auth_helper(consumer_key, consumer_secret, acc_key, acc_secret)
+         twitter_api_auth(consumer_key, consumer_secret, acc_key, acc_secret)
          
-      
+         
+         
       
    
    
