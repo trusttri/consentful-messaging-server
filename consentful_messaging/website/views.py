@@ -4,6 +4,7 @@ from django.http import HttpResponse, JsonResponse
 import csv
 import os
 import tweepy
+from website.models import TwitterAccount
 
 
 
@@ -27,7 +28,7 @@ def twitter_api_auth(consumer_key, consumer_secret, acc_key, acc_secret):
     try:
     	api.verify_credentials()
     	print("Authentication OK")
-		except:
+    except:
     	print("Error during authentication")
     return api
     
@@ -48,9 +49,7 @@ def twitter_api_auth_using_csv():
 			raise RuntimeError("Check if you have Twitter API keys in the csv file.")
 
 def get_user_information(username):
-	#check if account is public
-		#if Yes: get 1) number of followers, 2) joined date, 3) list of accounts that username follows
-		#make TwitterAccount object
+	api = twitter_api_auth_using_csv()
 	user = api.get_user(username)
 	if(user.protected):
 		print("User is Private")
@@ -60,6 +59,6 @@ def get_user_information(username):
 		userScreenName = user.screen_name
 		userDateCreated = user.created_at
 		userNumFollowers = user.followers_count
-		newAccount = TwitterAccount(userId,userScreenName,userDateCreated,userNumFollowers) 
+		newAccount = TwitterAccount(screen_name=userScreenName,created_date=userDateCreated,follower_num=userNumFollowers) 
 		newAccount.save()
 

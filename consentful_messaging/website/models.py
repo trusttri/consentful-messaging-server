@@ -17,10 +17,3 @@ class TwitterAccount(models.Model):
     #    base_field = models.TextField()
     #    size = 200
     #)   
-    
-    #constructor
-    def __init__(self, id_in, username, date_made, num_followers): #list_followers, list_following):
-        self.id = id_in
-        self.screen_name = username
-        self.created_date = date_made
-        self.follower_num = num_followers
