@@ -11,10 +11,15 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(BASE_DIR)
+try:
+    exec(open(BASE_DIR + '/private.py').read())
+except IOError:
+    print ("Unable to open configuration file!")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -76,8 +81,13 @@ WSGI_APPLICATION = 'consentful_messaging.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': MYSQL["NAME"],
+        'USER': MYSQL["USER"],
+        'PASSWORD': MYSQL["PASSWORD"],
+        'HOST': MYSQL["HOST"], 
+        'PORT': '', 
+        'STORAGE_ENGINE': 'MyISAM'
     }
 }
 
