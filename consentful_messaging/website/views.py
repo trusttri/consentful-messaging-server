@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-import csv
+import csv, json
 import os
 import tweepy
 from website.models import TwitterAccount
@@ -18,9 +18,20 @@ def index(request):
 def author_network_rules(request):
   user = request.GET.get('user')
   sender = request.GET.get('sender')
+  print(user, sender)
 
-  api = twitter_api_auth_using_csv()
-  return HttpResponse("false")
+  # return placeholder response for now
+  data = {'response': 'True'}
+  json_data = json.dumps(data)
+  response = HttpResponse(json_data, content_type='application/json')
+  response["Access-Control-Allow-Origin"] = "*"
+  response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS, PUT, DELETE, HEAD"
+  response["Access-Control-Max-Age"] = "1000"
+  response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+  print(response)
+  return response
+
+
     
 # helper function for authenticating API keys
 def twitter_api_auth(consumer_key, consumer_secret, acc_key, acc_secret):
