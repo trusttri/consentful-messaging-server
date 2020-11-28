@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 import csv
 import os
 import tweepy
@@ -13,6 +14,7 @@ def index(request):
 	context = {}
 	return HttpResponse(template.render(context, request))
 
+@csrf_exempt
 def author_network_rules(request):
   user = request.GET.get('user')
   sender = request.GET.get('sender')
