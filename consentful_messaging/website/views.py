@@ -14,23 +14,23 @@ def index(request):
 	return HttpResponse(template.render(context, request))
 
 def author_network_rules(request):
-    user = request.GET.get('user')
-    sender = request.GET.get('sender')
+  user = request.GET.get('user')
+  sender = request.GET.get('sender')
 
-    api = twitter_api_auth_using_csv()
-    return HttpResponse("false")
+  api = twitter_api_auth_using_csv()
+  return HttpResponse("false")
     
 # helper function for authenticating API keys
 def twitter_api_auth(consumer_key, consumer_secret, acc_key, acc_secret):
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(acc_key, acc_secret)
-    api = tweepy.API(auth, wait_on_rate_limit=True)
-    try:
-    	api.verify_credentials()
-    	print("Authentication OK")
-    except:
-    	print("Error during authentication")
-    return api
+  auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+  auth.set_access_token(acc_key, acc_secret)
+  api = tweepy.API(auth, wait_on_rate_limit=True)
+  try:
+  	api.verify_credentials()
+  	print("Authentication OK")
+  except:
+  	print("Error during authentication")
+  return api
     
 # API key authentication
 def twitter_api_auth_using_csv():

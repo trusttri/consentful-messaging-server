@@ -17,9 +17,9 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 print(BASE_DIR)
 try:
-    exec(open(BASE_DIR + '/private.py').read())
+  exec(open(BASE_DIR + '/private.py').read())
 except IOError:
-    print ("Unable to open configuration file!")
+  print ("Unable to open configuration file!")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
