@@ -9,11 +9,4 @@ class TwitterAccount(models.Model):
   screen_name = models.TextField()
   created_date = models.DateField(auto_now=False,auto_now_add=False)
   follower_num = models.IntegerField()
-  #following_list = ListTextField(
-  #    base_field=models.TextField() # list of usernames of followers of this account
-  #    size = 200
-  #)
-  #follower_list = ListTextField( # list of usernames of accounts that this account follows
-  #    base_field = models.TextField()
-  #    size = 200
-  #)   
+  followers = models.ManyToManyField("self", symmetrical=False, related_name="following")
