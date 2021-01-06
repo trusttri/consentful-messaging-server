@@ -32,6 +32,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Celery
+CELERY_BROKER_URL = 'amqp://localhost'
+CELERY_IMPORTS = ("website.tasks",)
+# CELERY_RESULT_BACKEND = 'db+scheme://user:password@host:port/dbname'
+# CELERY_IGNORE_RESULT = False
+# CELERY_RESULT_DB_SHORT_LIVED_SESSIONS = True
+
 
 # Application definition
 
