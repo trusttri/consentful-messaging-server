@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from website.views import index, author_network_rules
+from website.views import index, author_network_rules, poll_status
 
 urlpatterns = [
 	path('admin/', admin.site.urls),
 	url(r'^$', index),
-	url(r'^author_network_rules', author_network_rules)
+	url(r'^author_network_rules', author_network_rules),
+    url(r'^poll_status', poll_status)
 ]
