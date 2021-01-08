@@ -6,7 +6,7 @@ import csv, json
 import os
 import tweepy
 from website.models import TwitterAccount
-
+from website.tasks import network_rules
 
 
 def index(request):
@@ -14,22 +14,64 @@ def index(request):
 	context = {}
 	return HttpResponse(template.render(context, request))
 
+
 @csrf_exempt
 def author_network_rules(request):
-  user = request.GET.get('user')
-  sender = request.GET.get('sender')
-  print(user, sender)
+	user = request.GET.get('user')
+	sender = request.GET.get('sender')
+	access_key = request.GET.get('oauth_token')
+	access_secret = request.GET.get('oauth_token_secret')
 
-  # return placeholder response for now
-  data = {'response': 'True'}
-  json_data = json.dumps(data)
-  response = HttpResponse(json_data, content_type='application/json')
-  response["Access-Control-Allow-Origin"] = "*"
-  response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS, PUT, DELETE, HEAD"
-  response["Access-Control-Max-Age"] = "1000"
-  response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
-  print(response)
-  return response
+	task = network_rules.delay(user, sender, access_key, access_secret)
+
+	request.session['task_id'] = task.id
+
+	data = {'user': user, 'sender': sender, 
+			'state': task.status,
+			'task_id': task.id}
+	
+	json_data = json.dumps(data)
+	response = HttpResponse(json_data, content_type='application/json')
+	response["Access-Control-Allow-Origin"] = "*"
+	response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS, PUT, DELETE, HEAD"
+	response["Access-Control-Max-Age"] = "1000"
+	response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+	print(response)
+	return response
+
+
+@csrf_exempt
+def poll_status(request):
+	user = request.GET.get('user')
+	sender = request.GET.get('sender')
+	task_id = request.GET.get('task_id')
+	print(user, sender)
+
+	task = network_rules.AsyncResult(task_id)
+	data = {
+			'state': task.state,
+			'result': 'FAILURE'
+			}
+
+	if task.state == "SUCCESS":
+		data['state'] = 'SUCCESS'
+		data['result'] == 'False'
+	elif task.state == "PENDING" or task.state == "RECEIVED" or task.state == "STARTED":
+		print ("currently pending.. " + user)
+		data['state'] = "PENDING"
+	else:
+		data['state'] = "FAILURE"
+		data['result'] = "FAILURE"
+
+
+	json_data = json.dumps(data)
+	response = HttpResponse(json_data, content_type='application/json')
+	response["Access-Control-Allow-Origin"] = "*"
+	response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS, PUT, DELETE, HEAD"
+	response["Access-Control-Max-Age"] = "1000"
+	response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+	print(response)
+	return response
 
 
     
@@ -44,6 +86,7 @@ def twitter_api_auth(consumer_key, consumer_secret, acc_key, acc_secret):
   except:
   	print("Error during authentication")
   return api
+
     
 # API key authentication
 def twitter_api_auth_using_csv():
@@ -60,6 +103,7 @@ def twitter_api_auth_using_csv():
 			return twitter_api_auth(consumer_key, consumer_secret, acc_key, acc_secret)
 		except NameError:
 			raise RuntimeError("Check if you have Twitter API keys in the csv file.")
+
 
 def get_user_information(username):
 	api = twitter_api_auth_using_csv()

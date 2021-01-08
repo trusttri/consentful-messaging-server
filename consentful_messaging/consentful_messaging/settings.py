@@ -33,11 +33,11 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Celery
-CELERY_BROKER_URL = 'amqp://localhost'
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/' #rabbitmq
 CELERY_IMPORTS = ("website.tasks",)
-# CELERY_RESULT_BACKEND = 'db+scheme://user:password@host:port/dbname'
-# CELERY_IGNORE_RESULT = False
-# CELERY_RESULT_DB_SHORT_LIVED_SESSIONS = True
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_IGNORE_RESULT = False
+CELERY_RESULT_DB_SHORT_LIVED_SESSIONS = True
 
 
 # Application definition
@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'website',
-    'corsheaders'
+    'corsheaders',
+    'django_celery_results'
 ]
 
 MIDDLEWARE = [
