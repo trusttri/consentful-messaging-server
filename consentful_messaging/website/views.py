@@ -57,7 +57,6 @@ def poll_status(request):
 		data['state'] = 'SUCCESS'
 		data['result'] == 'False'
 	elif task.state == "PENDING" or task.state == "RECEIVED" or task.state == "STARTED":
-		print ("currently pending.. " + user)
 		data['state'] = "PENDING"
 	else:
 		data['state'] = "FAILURE"
