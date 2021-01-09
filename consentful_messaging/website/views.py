@@ -49,15 +49,16 @@ def poll_status(request):
 
 	task = network_rules.AsyncResult(task_id)
 	data = {
+			'task_id': task_id,
 			'state': task.state,
-			'result': 'FAILURE'
 			}
 
 	if task.state == "SUCCESS":
 		data['state'] = 'SUCCESS'
-		data['result'] == 'False'
+		data['result'] = 'False' # placeholder for now
 	elif task.state == "PENDING" or task.state == "RECEIVED" or task.state == "STARTED":
 		data['state'] = "PENDING"
+		data['result'] = "PENDING"
 	else:
 		data['state'] = "FAILURE"
 		data['result'] = "FAILURE"
