@@ -12,7 +12,7 @@ import csv, json
 def get_user_information(username):
 	newAccount = TwitterAccount.objects.filter(screen_name=username)
 	if len(newAccount) > 0:
-		return newAccount
+		return newAccount[0]
 	else:
 		api = twitter_api_auth_using_csv()
 		user = api.get_user(username)
