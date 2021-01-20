@@ -1,4 +1,9 @@
-def check_follower_num(user, sender):
+import tweepy
+from website.models import TwitterAccount
+
+def check_follower_num(sender, threshold):
+	if sender.follower_num > threshold:
+		return True
 	return False
 
 def check_follow(user, sender):
