@@ -5,10 +5,9 @@ from website.models import TwitterAccount
 from django.utils import timezone
 import tweepy
 from website.authentication import twitter_api_auth, twitter_api_auth_using_csv
-from website.network_rules import check_follower_num
+from website.network_functions import check_follower_num
 import csv, json
     
-
 def get_user_information(username):
 	api = twitter_api_auth_using_csv()
 	user = api.get_user(username)
@@ -31,9 +30,6 @@ def network_rules(user_name, sender_name):
 	print(user_account)
 	print(sender_account)
 
-	is_follower_num = check_follower_num(sender_account, 300)
+	is_follower_num = check_follower_num(sender_account, 1000)
 
 	return is_follower_num
-
-# def network_rules(user, sender, access_key, access_secret):
-# 	return False

@@ -19,11 +19,7 @@ def index(request):
 def author_network_rules(request):
 	user_name = request.GET.get('user')
 	sender_name = request.GET.get('sender')
-	# access_key = request.GET.get('oauth_token')
-	# access_secret = request.GET.get('oauth_token_secret')
 
-
-	# task = network_rules.delay(user, sender, access_key, access_secret)
 	task = network_rules.delay(user_name, sender_name)
 
 	request.session['task_id'] = task.id
@@ -54,7 +50,7 @@ def poll_status(request):
 
 	if task.state == "SUCCESS":
 		data['state'] = 'SUCCESS'
-		data['result'] = 'False' # placeholder for now
+		data['result'] = task.get()
 	elif task.state == "PENDING" or task.state == "RECEIVED" or task.state == "STARTED":
 		data['state'] = "PENDING"
 		data['result'] = "PENDING"

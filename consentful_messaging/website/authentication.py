@@ -1,13 +1,13 @@
 import tweepy
 import csv, json
+from website.models import TwitterAccount
 
 # helper function for authenticating API keys
 def twitter_api_auth(consumer_key, consumer_secret, acc_key, acc_secret):
   auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
   auth.set_access_token(acc_key, acc_secret)
-  api = tweepy.API(auth, wait_on_rate_limit=True)
   try:
-  	api.verify_credentials()
+  	api = tweepy.API(auth, wait_on_rate_limit=True)
   	print("Authentication OK")
   except:
   	print("Error during authentication")
@@ -29,6 +29,5 @@ def twitter_api_auth_using_csv():
 			return twitter_api_auth(consumer_key, consumer_secret, acc_key, acc_secret)
 		except NameError:
 			raise RuntimeError("Check if you have Twitter API keys in the csv file.")
-
 
 

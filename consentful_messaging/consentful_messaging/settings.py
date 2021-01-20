@@ -33,11 +33,12 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Celery
-CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/' #rabbitmq
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//' #rabbitmq
 CELERY_IMPORTS = ("website.tasks",)
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_IGNORE_RESULT = False
 CELERY_RESULT_DB_SHORT_LIVED_SESSIONS = True
+CELERY_TASK_TRACK_STARTED = True
 
 
 # Application definition
