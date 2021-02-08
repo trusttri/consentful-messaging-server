@@ -68,11 +68,3 @@ def poll_status(request):
 	print(response)
 	return response
 
-def return_200_likes(username):
-    api = twitter_api_auth_using_csv()
-    try:
-        liked_list = api.favorites(screen_name = username, count = 200)
-    except tweepy.TweepError as e:
-        return 'Not authorized.'
-    return liked_list
-
