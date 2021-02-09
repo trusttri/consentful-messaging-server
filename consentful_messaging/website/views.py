@@ -68,6 +68,3 @@ def poll_status(request):
 	print(response)
 	return response
 
-
-
-
