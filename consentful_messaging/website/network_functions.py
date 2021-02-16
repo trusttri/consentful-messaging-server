@@ -47,7 +47,7 @@ def check_mutuals(user_name, sender_name):
     senderSet = set(sender_following_ids)
 
     intersection = userSet.intersection(senderSet)
-    if intersection == True:
+    if len(intersection) > 0:
         return True
     else:
         return False 
