@@ -23,8 +23,35 @@ def check_follow(user, sender):
 	else:
 		return False
 
-def check_mutuals(user, sender):
-	return False
+def check_mutuals(user_name, sender_name):
+	api = twitter_api_auth_using_csv()
+	
+    user = api.get_user(user_name)
+    numUserFollowing = user.friends_count
+    user_following_ids = []
+
+    users = tweepy.Cursor(api.friends_ids, screen_name=user_name)
+    for page in users.pages():
+        user_following_ids.extend(page)
+    print("Are the list of user's following complete? " + str(len(user_following_ids) == numUserFollowing) + ", " + str(len(user_following_ids)))
+    
+    sender = api.get_user(sender_name)
+    numSenderFollowing = sender.friends_count
+    sender_following_ids = []
+    senders = tweepy.Cursor(api.friends_ids, screen_name=sender_name)
+    for page in senders.pages():
+        sender_following_ids.extend(page)
+    print("Are the list of sender's following complete?" +str(len(sender_following_ids) == numSenderFollowing) + ", " + str(len(sender_following_ids)))
+
+    userSet = set(user_following_ids)
+    senderSet = set(sender_following_ids)
+
+    intersection = userSet.intersection(senderSet)
+    if intersection == True:
+        return True
+    else:
+        return False 
+
 
 # Check if user has liked sender's tweet before
 def check_like_history(user, sender):
