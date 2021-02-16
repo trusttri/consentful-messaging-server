@@ -73,3 +73,11 @@ def check_mutual_retweet_history(user, sender):
 def check_message_history(user, sender):
 	return False
 
+# Returns a user's recent 200 likes
+def return_recent_likes(username):
+    api = twitter_api_auth_using_csv()
+    try:
+        liked_list = api.favorites(screen_name = username, count = 200)
+    except tweepy.TweepError as e:
+        return 'Not authorized.'
+    return liked_list
