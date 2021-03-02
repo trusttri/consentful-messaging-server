@@ -23,8 +23,26 @@ def check_follow(user, sender):
 	else:
 		return False
 
-def check_mutuals(user, sender):
-	return False
+def check_mutuals(user_name, sender_name):
+    user_following_ids = []
+    users = tweepy.Cursor(api.friends_ids, screen_name=user_name)
+    for page in users.pages():
+        user_following_ids.extend(page)
+
+    sender_following_ids = []
+    senders = tweepy.Cursor(api.followers_ids, screen_name=sender_name)
+    for page in senders.pages():
+        sender_following_ids.extend(page)
+
+    userSet = set(user_following_ids)
+    senderSet = set(sender_following_ids)
+
+    intersection = userSet.intersection(senderSet)
+    if len(intersection) > 0:
+        return True
+    else:
+        return False 
+
 
 # Check if user has liked sender's tweet before
 def check_like_history(user, sender):
@@ -46,3 +64,11 @@ def check_mutual_retweet_history(user, sender):
 def check_message_history(user, sender):
 	return False
 
+# Returns a user's recent 200 likes
+def return_recent_likes(username):
+    api = twitter_api_auth_using_csv()
+    try:
+        liked_list = api.favorites(screen_name = username, count = 200)
+    except tweepy.TweepError as e:
+        return 'Not authorized.'
+    return liked_list
