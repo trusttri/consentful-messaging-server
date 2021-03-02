@@ -24,8 +24,8 @@ def check_follow(user, sender):
 		return False
 
 def check_mutuals(user_name, sender_name):
-	api = twitter_api_auth_using_csv()
-	
+    api = twitter_api_auth_using_csv()
+    
     user = api.get_user(user_name)
     numUserFollowing = user.friends_count
     user_following_ids = []
