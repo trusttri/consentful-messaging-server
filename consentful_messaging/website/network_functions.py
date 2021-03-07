@@ -25,10 +25,8 @@ def check_follow(user, sender):
 
 def check_mutuals(user_name, sender_name):
     api = twitter_api_auth_using_csv()
-    
-    user = api.get_user(user_name)
-    numUserFollowing = user.friends_count
 
+    user_following_ids = []
     users = tweepy.Cursor(api.friends_ids, screen_name=user_name)
     for page in users.pages():
         user_following_ids.extend(page)
