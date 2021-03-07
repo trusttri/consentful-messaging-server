@@ -5,7 +5,7 @@ from django.db.models import IntegerField, Model
 # Create your models here.
 
 class TwitterAccount(models.Model):
-  id = models.CharField(max_length = 25, primary_key=True)
+  id = models.CharField(max_length = 64, primary_key=True)
   screen_name = models.TextField(blank=True, null=True)
   created_date = models.DateField(auto_now=False,auto_now_add=False,blank=True, null=True)
   follower_num = models.IntegerField(blank=True, null=True)
