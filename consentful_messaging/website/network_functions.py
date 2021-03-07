@@ -50,6 +50,7 @@ def check_mutuals(user_name, sender_name):
     sender_following = sender.followers.all()
     userSet = set(user_following)
     senderSet = set(sender_following)
+
     intersection = userSet.intersection(senderSet)
     if len(intersection) > 0:
         return True
