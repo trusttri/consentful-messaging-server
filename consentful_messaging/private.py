@@ -1,6 +1,6 @@
 MYSQL = {
     'NAME' : 'consentful_messaging',
     'USER' : 'myUser',
-    'PASSWORD' : 'yourpassword',
+    'PASSWORD' : 'root',
     'HOST' : 'localhost',
 }

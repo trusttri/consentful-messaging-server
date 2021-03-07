@@ -46,10 +46,11 @@ def getFollowers(api, twitter_account):
 
 	for follower in follower_list:
 		followerAccount = TwitterAccount.objects.filter(id = follower)
-		if len(followerAccount > 0):
+		if len(followerAccount) > 0:
 			twitter_account.followers.add(followerAccount)
 		else:
 			followerAccount = TwitterAccount(id=follower)
+			followerAccount.save()
 			twitter_account.followers.add(followerAccount)
 			
 
@@ -62,11 +63,12 @@ def getFollowing(api, twitter_account):
 
 	for follow in following_list:
 		followAccount = TwitterAccount.objects.filter(id=follow)
-		if len(followAccount < 0):
-			twitter_account.following.add(followAccount)
+		if len(followAccount) > 0:
+			twitter_account.following_set.add(followAccount)
 		else:
 			followAccount = TwitterAccount(id=follow)
-			twitter_account.following.add(followAccount)
+			followAccount.save()
+			twitter_account.following_set.add(followAccount)
 
 
 @shared_task
