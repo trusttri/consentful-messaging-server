@@ -28,11 +28,11 @@ def get_user_information(username):
 			userFollowingNum = user.friends_count
 			newAccount = TwitterAccount(id=userId, screen_name=userScreenName,created_date=userDateCreated,follower_num=userNumFollowers,protected=userProtected, following_num=userFollowingNum) 
 			#need to get suspended info 
-
+			newAccount.save()
 			getFollowers(api,newAccount)
 			getFollowing(api,newAccount)
 
-			newAccount.save()
+			
 			return newAccount
 
 
@@ -47,11 +47,12 @@ def getFollowers(api, twitter_account):
 	for follower in follower_list:
 		followerAccount = TwitterAccount.objects.filter(id = follower)
 		if len(followerAccount) > 0:
-			twitter_account.followers.add(followerAccount)
+			twitter_account.followers.add(followerAccount[0])
 		else:
 			followerAccount = TwitterAccount(id=follower)
 			followerAccount.save()
 			twitter_account.followers.add(followerAccount)
+			twitter_account.save()
 			
 
 def getFollowing(api, twitter_account):
@@ -64,12 +65,12 @@ def getFollowing(api, twitter_account):
 	for follow in following_list:
 		followAccount = TwitterAccount.objects.filter(id=follow)
 		if len(followAccount) > 0:
-			twitter_account.following_set.add(followAccount)
+			twitter_account.following.add(followAccount[0])
 		else:
 			followAccount = TwitterAccount(id=follow)
 			followAccount.save()
-			twitter_account.following_set.add(followAccount)
-
+			twitter_account.following.add(followAccount)
+			twitter_account.save()
 
 @shared_task
 def network_rules(user_name, sender_name):
