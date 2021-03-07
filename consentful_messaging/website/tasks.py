@@ -20,13 +20,53 @@ def get_user_information(username):
 			print("User is Private")
 			return
 		else:
-			userId = user.id_str
+			userId = user.id_str #twitter_id
 			userScreenName = user.screen_name
 			userDateCreated = user.created_at
 			userNumFollowers = user.followers_count
-			newAccount = TwitterAccount(screen_name=userScreenName,created_date=userDateCreated,follower_num=userNumFollowers) 
+			userProtected = user.protected
+			userFollowingNum = user.friends_count
+			newAccount = TwitterAccount(id=userId, screen_name=userScreenName,created_date=userDateCreated,follower_num=userNumFollowers,protected=userProtected, following_num=userFollowingNum) 
+			#need to get suspended info 
+
+			getFollowers(api,newAccount)
+			getFollowing(api,newAccount)
+
 			newAccount.save()
 			return newAccount
+
+
+
+def getFollowers(api, twitter_account):
+	#getting all followers: followers.ids() seems to return all id's, not sure if there is a max
+	follower_list = []
+	fols = tweepy.Cursor(api.followers_ids, screen_name = twitter_account.screen_name)
+	for page in fols.pages():
+		follower_list.extend(page)
+
+	for follower in follower_list:
+		followerAccount = TwitterAccount.objects.filter(id = follower)
+		if len(followerAccount > 0):
+			twitter_account.followers.add(followerAccount)
+		else:
+			followerAccount = TwitterAccount(id=follower)
+			twitter_account.followers.add(followerAccount)
+			
+
+def getFollowing(api, twitter_account):
+	#getting all following -- friends.ids() returns a lot of id's, not sure what the max is
+	following_list = []
+	folls = tweepy.Cursor(api.friends_ids, screen_name = twitter_account.screen_name)
+	for page in folls.pages():
+		following_list.extend(page)
+
+	for follow in following_list:
+		followAccount = TwitterAccount.objects.filter(id=follow)
+		if len(followAccount < 0):
+			twitter_account.following.add(followAccount)
+		else:
+			followAccount = TwitterAccount(id=follow)
+			twitter_account.following.add(followAccount)
 
 
 @shared_task
