@@ -6,6 +6,8 @@ from django.utils import timezone
 import tweepy
 from website.authentication import twitter_api_auth, twitter_api_auth_using_csv
 from website.network_functions import check_follower_num
+from website.network_functions import check_follow
+from website.network_functions import check_mutuals
 import csv, json
     
 
@@ -80,5 +82,7 @@ def network_rules(user_name, sender_name):
 	print(sender_account)
 
 	is_follower_num = check_follower_num(sender_account, 1000)
+	# is_following = check_follow(user_name, sender_name)
+	# is_mutuals = check_mutuals(user_name, sender_name)
 
 	return is_follower_num

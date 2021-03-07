@@ -2,3 +2,4 @@
 __pycache__/
 .DS_Store
 consent-message-env/
+.idea
