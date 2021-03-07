@@ -41,11 +41,15 @@ def author_network_rules(request):
 @csrf_exempt
 def poll_status(request):
 	task_id = request.GET.get('task_id')
+	user_name = request.GET.get('user')
+	sender_name = request.GET.get('sender')
 
 	task = network_rules.AsyncResult(task_id)
 	data = {
 			'task_id': task_id,
 			'state': task.state,
+			'user': user_name,
+			'sender': sender_name
 			}
 
 	if task.state == "SUCCESS":
