@@ -3,3 +3,6 @@ __pycache__/
 .DS_Store
 consent-message-env/
 .idea
+consentful_messaging/private.py
+consentful_messaging/website/twitter-creds.csv
+erl_crash.dump

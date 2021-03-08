@@ -27,7 +27,7 @@ def check_follow(user, sender):
     else:
         return False
 
-def check_mutuals(user_name, sender_name):
+def check_mutuals(user, sender):
     # user_following_ids = []
     # users = tweepy.Cursor(api.friends_ids, screen_name=user_name)
     # for page in users.pages():
