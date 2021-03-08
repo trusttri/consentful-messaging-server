@@ -82,7 +82,7 @@ def network_rules(user_name, sender_name):
 	print(sender_account)
 
 	is_follower_num = check_follower_num(sender_account, 1000)
-	# is_following = check_follow(user_name, sender_name)
-	# is_mutuals = check_mutuals(user_name, sender_name)
+	is_following = check_follow(user_account, sender_account)
+	is_mutuals = check_mutuals(user_account, sender_account)
 
-	return is_follower_num
+	return is_follower_num & is_following & is_mutuals
