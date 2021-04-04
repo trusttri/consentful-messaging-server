@@ -1,8 +1,11 @@
 from django.db import models
 from django.db.models import IntegerField, Model
+from django.contrib.auth.models import User
 ##from django_mysql.models import ListTextField
 
 # Create your models here.
+class User(models.Model):
+	user = AutoOneToOneField(User, primary_key=True, on_delete=models.CASCADE)
 
 class TwitterAccount(models.Model):
   id = models.CharField(max_length = 64, primary_key=True)
