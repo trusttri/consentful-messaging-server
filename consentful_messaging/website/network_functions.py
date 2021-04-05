@@ -85,3 +85,11 @@ def return_recent_likes(username):
     except tweepy.TweepError as e:
         return 'Not authorized.'
     return liked_list
+
+# Check if user has previously liked sender's tweets
+def user_liked_sender(user, sender):
+    liked_list = return_recent_likes(user)
+    for status in liked_list:
+        if status.user.screen_name == sender.screen_name:
+            return True
+    return False
