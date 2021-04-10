@@ -15,37 +15,14 @@ def check_follower_num(sender, threshold):
 
 ###### time consuming functions ######
 def check_follow(user, sender):
-	# api = twitter_api_auth_using_csv()
-	# friendship = api.show_friendship(source_screen_name=user.screen_name, target_screen_name=sender.screen_name)
-	# print(friendship[0])
-	# if friendship[0].following == True:
-	# 	return True
-	# else:
-	# 	return False
+
     if sender in user.followers.all():
         return True
     else:
         return False
 
 def check_mutuals(user, sender):
-    # user_following_ids = []
-    # users = tweepy.Cursor(api.friends_ids, screen_name=user_name)
-    # for page in users.pages():
-    #     user_following_ids.extend(page)
-    #
-    # sender_following_ids = []
-    # senders = tweepy.Cursor(api.followers_ids, screen_name=sender_name)
-    # for page in senders.pages():
-    #     sender_following_ids.extend(page)
-    #
-    # userSet = set(user_following_ids)
-    # senderSet = set(sender_following_ids)
-    #
-    # intersection = userSet.intersection(senderSet)
-    # if len(intersection) > 0:
-    #     return True
-    # else:
-    #     return False
+
     user_following = user.followers.all()
     sender_following = sender.followers.all()
     userSet = set(user_following)
