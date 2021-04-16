@@ -5,7 +5,10 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class User(models.Model):
-	user = AutoOneToOneField(User, primary_key=True, on_delete=models.CASCADE)
+  user = AutoOneToOneField(User, primary_key=True, on_delete=models.CASCADE)
+  network_rules = models.TextField(blank=True, null=True)
+  twitter_account = models.OneToOneField('TwitterAccount', on_delete=models.PROTECT)
+  threshold_follower_num = models.IntegerField(default=0)
 
 class TwitterAccount(models.Model):
   id = models.CharField(max_length = 64, primary_key=True)
@@ -16,5 +19,5 @@ class TwitterAccount(models.Model):
   suspended = models.BooleanField(default=False,blank=True, null=True) #suspended?
   protected = models.BooleanField(blank=True, null=True) #protected?
   following_num = models.IntegerField(blank=True, null=True) # add code in tasks to retrieve following_num from api
-
+  flagged_by = models.ForeignKey('User', on_delete=models.PROTECT, null=True)
   #code for storing list of following and followers using network_functions cursor method

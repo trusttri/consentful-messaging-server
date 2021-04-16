@@ -10,10 +10,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        # migrations.RemoveField(
-        #    model_name='twitteraccount',
-        #    name='twitter_id',
-        # ),
+        migrations.RemoveField(
+           model_name='twitteraccount',
+           name='twitter_id',
+        ),
         migrations.AlterField(
             model_name='twitteraccount',
             name='followers',
