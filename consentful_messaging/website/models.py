@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import IntegerField, Model
 from django.contrib.auth.models import User
+from annoying.fields import AutoOneToOneField
 ##from django_mysql.models import ListTextField
 
 # Create your models here.
